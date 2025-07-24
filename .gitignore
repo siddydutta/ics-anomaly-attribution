@@ -2,10 +2,16 @@
 __pycache__
 
 # Intermediate outputs
-*.pdf
-*.png
-*.pkl
+# *.pdf
+# *.png
+# *.pkl
 *.npy
-*.h5
-*.json
+# *.h5
+# *.json
 
+# Dataset
+*.csv
+
+# Other Files
+.DS_Store
+*.log
