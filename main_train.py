@@ -19,8 +19,8 @@
 rseed = 2021
 from numpy.random import seed
 seed(rseed)
-from tensorflow import set_random_seed
-set_random_seed(rseed)
+import tensorflow as tf
+tf.random.set_seed(rseed)
 
 # Generic python
 import argparse
@@ -38,15 +38,13 @@ warnings.filterwarnings('ignore',category=FutureWarning)
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_curve, precision_recall_curve
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from tensorflow.keras.models import load_model
-import tensorflow as tf
+from keras import models
 
 # Need to train model w/TF1 because SHAP incompatible with TF2 https://github.com/slundberg/shap/issues/85
 #tf.compat.v1.disable_v2_behavior()
 #tf.compat.v1.disable_eager_execution()
 
 # Custom packages
-from detector import lstm, cnn, gru
 from data_loader import load_train_data, load_test_data
 from utils import utils
 
@@ -59,10 +57,13 @@ def train_forecast_model(model_type, config, Xtrain, Xval, Ytrain, Yval):
     model_params['nI'] = Xtrain.shape[2]
 
     if model_type == 'GRU':
+        from detector import gru
         event_detector = gru.GatedRecurrentUnit(**model_params)
     elif model_type == 'LSTM':
+        from detector import lstm
         event_detector = lstm.LongShortTermMemory(**model_params)
     elif model_type == 'CNN':
+        from detector import cnn
         event_detector = cnn.ConvNN(**model_params)
     else:
         print(f'Model type {model_type} is not supported.')
@@ -85,10 +86,13 @@ def train_forecast_model_by_idxs(model_type, config, Xfull, train_idxs, val_idxs
     model_params['nI'] = Xfull.shape[1]
 
     if model_type == 'GRU':
+        from detector import gru
         event_detector = gru.GatedRecurrentUnit(**model_params)
     elif model_type == 'LSTM':
+        from detector import lstm
         event_detector = lstm.LongShortTermMemory(**model_params)
     elif model_type == 'CNN':
+        from detector import cnn
         event_detector = cnn.ConvNN(**model_params)
     else:
         print(f'Model type {model_type} is not supported.')
@@ -120,17 +124,20 @@ def load_saved_model(model_type, params_filename, model_filename):
         model_params = json.load(fd)
 
     if model_type == 'CNN':
+        from detector import cnn
         event_detector = cnn.ConvNN(**model_params)
     elif model_type == 'LSTM':
+        from detector import lstm
         event_detector = lstm.LongShortTermMemory(**model_params)
     elif model_type == 'GRU':
+        from detector import gru
         event_detector = gru.GatedRecurrentUnit(**model_params)
     else:
         print(f'Model type {model_type} is not supported.')
         return None
 
     # load keras model
-    event_detector.inner = load_model(model_filename)
+    event_detector.inner = models.load_model(model_filename)
 
     return event_detector
 

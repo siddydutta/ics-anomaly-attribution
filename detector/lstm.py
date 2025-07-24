@@ -27,10 +27,7 @@ import warnings
 warnings.filterwarnings('ignore',category=FutureWarning)
 
 # keras
-from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-from tensorflow.keras.layers import Input, Dense, SimpleRNN, LSTM
-from tensorflow.keras.models import Model, Sequential
-from tensorflow.keras import optimizers
+import keras
 from .detector import ICSDetector
 
 # ### RNN classes
@@ -77,26 +74,26 @@ class LongShortTermMemory(ICSDetector):
             print('Error: Must have at least one layer. Found layers={}'.format(layers))
             return
 
-        input_layer = Input(shape=(history,nI))
-        
+        input_layer = keras.layers.Input(shape=(history,nI))
+
         if layers > 1:
 
             # When feeding an LSTM layer to another LSTM layer, we need to return sequences.
-            lstmlayer = LSTM(units, activation=activation, return_sequences=True)(input_layer)
+            lstmlayer = keras.layers.LSTM(units, activation=activation, return_sequences=True)(input_layer)
 
             for _ in range(layers - 2):
-                lstmlayer = LSTM(units, activation=activation, return_sequences=True)(lstmlayer)
+                lstmlayer = keras.layers.LSTM(units, activation=activation, return_sequences=True)(lstmlayer)
 
             # On the last layer, don't return sequences.
-            lstmlayer = LSTM(units)(lstmlayer)
+            lstmlayer = keras.layers.LSTM(units)(lstmlayer)
 
         else:
             # If just 1 layer, connect directly to input
-            lstmlayer = LSTM(units)(input_layer)
+            lstmlayer = keras.layers.LSTM(units)(input_layer)
 
-        dense_out = Dense(nI)(lstmlayer)
+        dense_out = keras.layers.Dense(nI)(lstmlayer)
 
-        model = Model(input_layer, dense_out)
+        model = keras.models.Model(input_layer, dense_out)
         model.compile(loss='mean_squared_error', optimizer=optimizer)
 
         if verbose:
@@ -157,7 +154,7 @@ class LongShortTermMemory(ICSDetector):
 
         if use_callbacks:
             train_params['callbacks'] = [
-                EarlyStopping(monitor='val_loss', patience=3, verbose=0,  min_delta=0, mode='auto', restore_best_weights=True)
+                keras.callbacks.EarlyStopping(monitor='val_loss', patience=3, verbose=0,  min_delta=0, mode='auto', restore_best_weights=True)
             ]
 
         if 'validation_data' in train_params:        
@@ -213,7 +210,7 @@ class LongShortTermMemory(ICSDetector):
 
         if use_callbacks:
             train_params['callbacks'] = [
-                EarlyStopping(monitor='val_loss', patience=3, verbose=0,  min_delta=0, mode='auto', restore_best_weights=True)
+                keras.callbacks.EarlyStopping(monitor='val_loss', patience=3, verbose=0,  min_delta=0, mode='auto', restore_best_weights=True)
             ]
 
         if 'validation_data' in train_params:        

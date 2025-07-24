@@ -25,9 +25,7 @@ import warnings
 warnings.filterwarnings('ignore',category=FutureWarning)
 
 # keras
-from tensorflow.keras.models import Model, Sequential
-from tensorflow.keras.layers import Input, Dense, Conv1D, LSTM, BatchNormalization, Flatten, Concatenate
-from tensorflow.keras.optimizers import Adam, SGD, RMSprop, Adagrad
+import keras
 
 import json
 
@@ -60,7 +58,7 @@ class ICSDetector(object):
         verbose = self.params['verbose'] # echo on screen
 
         # create model
-        inner_model = Sequential()
+        inner_model = keras.models.Sequential()
 
         # print autoencoder specs
         if verbose > 0:
