@@ -1,0 +1,210 @@
+{
+  "attack": 7,
+  "attributions": [
+    {
+      "feature": "FIT101",
+      "score": NaN
+    },
+    {
+      "feature": "LIT101",
+      "score": NaN
+    },
+    {
+      "feature": "MV101",
+      "score": NaN
+    },
+    {
+      "feature": "P101",
+      "score": NaN
+    },
+    {
+      "feature": "P102",
+      "score": NaN
+    },
+    {
+      "feature": "AIT201",
+      "score": NaN
+    },
+    {
+      "feature": "AIT202",
+      "score": NaN
+    },
+    {
+      "feature": "AIT203",
+      "score": NaN
+    },
+    {
+      "feature": "FIT201",
+      "score": NaN
+    },
+    {
+      "feature": "MV201",
+      "score": NaN
+    },
+    {
+      "feature": "P201",
+      "score": NaN
+    },
+    {
+      "feature": "P202",
+      "score": NaN
+    },
+    {
+      "feature": "P203",
+      "score": NaN
+    },
+    {
+      "feature": "P204",
+      "score": NaN
+    },
+    {
+      "feature": "P205",
+      "score": NaN
+    },
+    {
+      "feature": "P206",
+      "score": NaN
+    },
+    {
+      "feature": "DPIT301",
+      "score": NaN
+    },
+    {
+      "feature": "FIT301",
+      "score": NaN
+    },
+    {
+      "feature": "LIT301",
+      "score": NaN
+    },
+    {
+      "feature": "MV301",
+      "score": NaN
+    },
+    {
+      "feature": "MV302",
+      "score": NaN
+    },
+    {
+      "feature": "MV303",
+      "score": NaN
+    },
+    {
+      "feature": "MV304",
+      "score": NaN
+    },
+    {
+      "feature": "P301",
+      "score": NaN
+    },
+    {
+      "feature": "P302",
+      "score": NaN
+    },
+    {
+      "feature": "AIT401",
+      "score": NaN
+    },
+    {
+      "feature": "AIT402",
+      "score": NaN
+    },
+    {
+      "feature": "FIT401",
+      "score": NaN
+    },
+    {
+      "feature": "LIT401",
+      "score": NaN
+    },
+    {
+      "feature": "P401",
+      "score": NaN
+    },
+    {
+      "feature": "P402",
+      "score": NaN
+    },
+    {
+      "feature": "P403",
+      "score": NaN
+    },
+    {
+      "feature": "P404",
+      "score": NaN
+    },
+    {
+      "feature": "UV401",
+      "score": NaN
+    },
+    {
+      "feature": "AIT501",
+      "score": NaN
+    },
+    {
+      "feature": "AIT502",
+      "score": NaN
+    },
+    {
+      "feature": "AIT503",
+      "score": NaN
+    },
+    {
+      "feature": "AIT504",
+      "score": NaN
+    },
+    {
+      "feature": "FIT501",
+      "score": NaN
+    },
+    {
+      "feature": "FIT502",
+      "score": NaN
+    },
+    {
+      "feature": "FIT503",
+      "score": NaN
+    },
+    {
+      "feature": "FIT504",
+      "score": NaN
+    },
+    {
+      "feature": "P501",
+      "score": NaN
+    },
+    {
+      "feature": "P502",
+      "score": NaN
+    },
+    {
+      "feature": "PIT501",
+      "score": NaN
+    },
+    {
+      "feature": "PIT502",
+      "score": NaN
+    },
+    {
+      "feature": "PIT503",
+      "score": NaN
+    },
+    {
+      "feature": "FIT601",
+      "score": NaN
+    },
+    {
+      "feature": "P601",
+      "score": NaN
+    },
+    {
+      "feature": "P602",
+      "score": NaN
+    },
+    {
+      "feature": "P603",
+      "score": NaN
+    }
+  ],
+  "true_label": "MV304"
+}
