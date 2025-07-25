@@ -23,7 +23,8 @@
 > - Updated to work with newer versions of Python and the TensorFlow library.
 > - Reduced scope to focus on the **SWaT** dataset only.
 > - Uses only the **LSTM** model architecture.
-> - Applies only the **LEMNA** attribution method to extract the most relevant features for each anomaly.
+> - Uses the ideal timing strategies only.
+> - Uses **MSE**, **SM** and **LEMNA** attributions for the ensemble method for anomaly attribution, implemented in [save_ensemble_attributions.py](/save_ensemble_attributions.py).
 
 This repository contains code for the paper: "Attributions for ML-based ICS anomaly detection: From theory to practice", to appear at the 31st Network and Distributed System Security Symposium (NDSS 2024).
 

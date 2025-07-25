@@ -1,4 +1,4 @@
-name: swat-lstm-lemna
+name: swat-lstm-ensemble
 channels:
   - anaconda
   - conda-forge
