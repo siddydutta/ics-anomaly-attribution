@@ -16,6 +16,15 @@
 
 # Attributions for ML-based ICS Anomaly Detection
 
+> [!NOTE]  
+> This repository is a fork of the original [ics-anomaly-attribution](https://github.com/pwwl/ics-anomaly-attribution) project by Clement Fung, Eric Zeng, and Lujo Bauer.
+>
+> It has been modified for use in a dissertation project, with the following changes:
+> - Updated to work with newer versions of Python and the TensorFlow library.
+> - Reduced scope to focus on the **SWaT** dataset only.
+> - Uses only the **LSTM** model architecture.
+> - Applies only the **LEMNA** attribution method to extract the most relevant features for each anomaly.
+
 This repository contains code for the paper: "Attributions for ML-based ICS anomaly detection: From theory to practice", to appear at the 31st Network and Distributed System Security Symposium (NDSS 2024).
 
 ### Bibtex
