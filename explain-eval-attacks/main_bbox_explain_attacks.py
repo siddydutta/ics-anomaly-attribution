@@ -20,9 +20,6 @@ import numpy as np
 import pdb
 import pickle
 
-import lime
-import shap
-
 import os
 import sys
 sys.path.append('..')
@@ -178,10 +175,12 @@ if __name__ == "__main__":
 	num_samples = args.num_samples
 
 	if exp_method == 'SHAP':
+		import shap
 		Xfull, sensor_cols = load_train_data(dataset_name)
 		baseline = utils.build_baseline(Xfull, history, method=exp_method)
 		expl = shap.DeepExplainer(event_detector.inner, baseline)
 	elif exp_method == 'LIME':
+		import lime
 		Xfull, sensor_cols = load_train_data(dataset_name)
 		baseline = utils.build_baseline(Xfull, history, method=exp_method)
 		expl = lime.lime_tabular.RecurrentTabularExplainer(baseline,
@@ -192,13 +191,13 @@ if __name__ == "__main__":
 		expl = None
 
 	# Practical detection
-	detection_points = pickle.load(open(f'meta-storage/{lookup_name}-detection-points.pkl', 'rb'))
-	model_detection_points = detection_points[lookup_name]
-	explain_detect(event_detector, lookup_name, attack_idx, attacks, Xtest,
-			model_detection_points,
-			method=exp_method,
-			expl=expl,
-			num_samples=num_samples)
+	# detection_points = pickle.load(open(f'meta-storage/{lookup_name}-detection-points.pkl', 'rb'))
+	# model_detection_points = detection_points[lookup_name]
+	# explain_detect(event_detector, lookup_name, attack_idx, attacks, Xtest,
+	# 		model_detection_points,
+	# 		method=exp_method,
+	# 		expl=expl,
+	# 		num_samples=num_samples)
 
 	# Ideal detection
 	explain_true_position(event_detector, lookup_name, attack_idx, attacks, Xtest,
