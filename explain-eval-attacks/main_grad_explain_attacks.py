@@ -31,8 +31,6 @@ from sklearn.model_selection import train_test_split
 
 sys.path.append('..')
 from data_loader import load_train_data, load_test_data
-from live_grad_explainer import smooth_grad_mse_explainer, integrated_gradients_mse_explainer, expected_gradients_mse_explainer
-from live_grad_explainer import smooth_grad_explainer, integrated_gradients_explainer
 from main_train import load_saved_model
 from utils import attack_utils, utils
 
@@ -201,21 +199,28 @@ if __name__ == "__main__":
 
 	if use_top_feat:
 		if 'SM' in explainer_codes:
-			explainers.append(('SM', smooth_grad_explainer.SaliencyMapHistoryExplainer()))
+			from live_grad_explainer.smooth_grad_explainer import SaliencyMapHistoryExplainer
+			explainers.append(('SM', SaliencyMapHistoryExplainer()))
 		if 'SG' in explainer_codes:
-			explainers.append(('SG', smooth_grad_explainer.SmoothGradHistoryExplainer()))
+			from live_grad_explainer.smooth_grad_explainer import SmoothGradHistoryExplainer
+			explainers.append(('SG', SmoothGradHistoryExplainer()))
 		if 'IG' in explainer_codes:
-			explainers.append(('IG', integrated_gradients_explainer.IntegratedGradientsHistoryExplainer()))
+			from live_grad_explainer.integrated_gradients_explainer import IntegratedGradientsHistoryExplainer
+			explainers.append(('IG', IntegratedGradientsHistoryExplainer()))
 	else:
 		if 'SM' in explainer_codes:
-			explainers.append(('SM', smooth_grad_mse_explainer.SaliencyMapMseHistoryExplainer()))
+			from live_grad_explainer.smooth_grad_mse_explainer import SaliencyMapMseHistoryExplainer
+			explainers.append(('SM', SaliencyMapMseHistoryExplainer()))
 		if 'SG' in explainer_codes:
-			explainers.append(('SG', smooth_grad_mse_explainer.SmoothGradMseHistoryExplainer()))
+			from live_grad_explainer.smooth_grad_mse_explainer import SmoothGradMseHistoryExplainer
+			explainers.append(('SG', SmoothGradMseHistoryExplainer()))
 		if 'IG' in explainer_codes:
-			explainers.append(('IG', integrated_gradients_mse_explainer.IntegratedGradientsMseHistoryExplainer()))
+			from live_grad_explainer.integrated_gradients_mse_explainer import IntegratedGradientsMseHistoryExplainer
+			explainers.append(('IG', IntegratedGradientsMseHistoryExplainer()))
 		if 'EG' in explainer_codes:
 			# Note: If using expected gradients, the baseline needs to be changed
-			explainers.append(('EG', expected_gradients_mse_explainer.ExpectedGradientsMseHistoryExplainer()))
+			from live_grad_explainer.expected_gradients_mse_explainer import ExpectedGradientsMseHistoryExplainer
+			explainers.append(('EG', ExpectedGradientsMseHistoryExplainer()))
 
 	if 'IG' in explainer_codes or 'EG' in explainer_codes:
 
@@ -261,8 +266,8 @@ if __name__ == "__main__":
 		eg_baseline = None
 
 	lookup_name = f'{model_name}-{run_name}'
-	detection_points = pickle.load(open(f'meta-storage/{lookup_name}-detection-points.pkl', 'rb'))
-	model_detection_points = detection_points[lookup_name]
+	# detection_points = pickle.load(open(f'meta-storage/{lookup_name}-detection-points.pkl', 'rb'))
+	# model_detection_points = detection_points[lookup_name]
 	samples = args.num_samples
 
 	# Each explanation method in outer loop
@@ -276,12 +281,12 @@ if __name__ == "__main__":
 			explain_true_position(event_detector, run_name, model_name, expl, Xtest, eg_baseline, attack_idx, use_top_feat=use_top_feat, num_samples=samples)
 
 			# Practical detection
-			explain_detect(event_detector, run_name, model_name, expl, Xtest, eg_baseline, attack_idx, model_detection_points, use_top_feat=use_top_feat, num_samples=samples)
+			# explain_detect(event_detector, run_name, model_name, expl, Xtest, eg_baseline, attack_idx, model_detection_points, use_top_feat=use_top_feat, num_samples=samples)
 		else:
 			# Ideal detection
 			explain_true_position(event_detector, run_name, model_name, expl, Xtest, baseline, attack_idx, use_top_feat=use_top_feat, num_samples=samples)
 
 			# Practical detection
-			explain_detect(event_detector, run_name, model_name, expl, Xtest, baseline, attack_idx, model_detection_points, use_top_feat=use_top_feat, num_samples=samples)
+			# explain_detect(event_detector, run_name, model_name, expl, Xtest, baseline, attack_idx, model_detection_points, use_top_feat=use_top_feat, num_samples=samples)
 
 	print("Finished!")

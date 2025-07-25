@@ -25,10 +25,10 @@ import warnings
 warnings.filterwarnings('ignore',category=FutureWarning)
 
 import json
-import tensorflow.keras.backend as K
+import tensorflow.python.keras.backend as K
 import tensorflow as tf
-from tensorflow.python.framework.ops import disable_eager_execution
-disable_eager_execution()
+# from tensorflow.python.framework.ops import disable_eager_execution
+# disable_eager_execution()
 
 from .explainer import ICSExplainer
 
@@ -141,17 +141,18 @@ class SaliencyMapMseHistoryExplainer(ICSExplainer):
         self.inner = model
 
         # MSE of model output and reconstruction goal (last part of input)
-        loss = K.mean((self.inner.output - Ytrue)**2)
-        
-        grads = K.gradients(
-          loss,
-          self.inner.input
-          )[0]
+        Ytrue = tf.convert_to_tensor(Ytrue, dtype=tf.float32)
 
-        # Sets up the gradient function
-        self.explainer = K.function([self.inner.input], [grads])
+        def gradient_fn(Xin):
+            Xin = tf.convert_to_tensor(Xin, dtype=tf.float32)
+            with tf.GradientTape() as tape:
+                tape.watch(Xin)
+                Ypred = self.inner(Xin, training=False)
+                loss = tf.reduce_mean(tf.square(Ypred - Ytrue), axis=None)  # TODO axis=-1?
+            grads = tape.gradient(loss, Xin)
+            return grads.numpy()
 
-        return 
+        self.explainer = gradient_fn
 
     def explain(self, Xexplain, baselines=None, n_steps = 50, multiply_by_input=True, **explain_params):
         """ Return an explanation for Xexplain.
@@ -166,7 +167,7 @@ class SaliencyMapMseHistoryExplainer(ICSExplainer):
         else:
           Xexplain_clean = Xexplain
 
-        single_grad = self.explainer([Xexplain_clean])[0]
+        single_grad = self.explainer(Xexplain_clean)[0]
 
         if multiply_by_input:
             attributions = single_grad * (Xexplain_clean)
