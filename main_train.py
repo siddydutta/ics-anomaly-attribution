@@ -16,11 +16,11 @@
 
 """
 # If EXACT reproducible results are needed
-# rseed = 2021
-# from numpy.random import seed
-# seed(rseed)
-# from tensorflow import set_random_seed
-# set_random_seed(rseed)
+rseed = 2021
+from numpy.random import seed
+seed(rseed)
+from tensorflow import set_random_seed
+set_random_seed(rseed)
 
 # Generic python
 import argparse
