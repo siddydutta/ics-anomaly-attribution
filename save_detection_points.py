@@ -42,7 +42,7 @@ def get_detection_points(lookup_name, dataset_name):
 
 	validation_instance_errors = np.mean(validation_errors, axis=1)
 	test_instance_errors = np.mean(test_errors, axis=1)
-	cutoff = np.quantile(validation_instance_errors, 0.9995)
+	cutoff = np.quantile(validation_instance_errors, 0.99)
 	
 	detection_lookup = dict()
 	detection_full_lookup = dict()
@@ -57,10 +57,11 @@ def get_detection_points(lookup_name, dataset_name):
 		attack_region = test_instance_errors[att_start:att_end]    
 
 		if np.sum(attack_region > cutoff) > 0:
-			det_point = np.min(np.where(attack_region > cutoff)[0])
-			detection_lookup[atk_idx] = det_point
-			detection_full_lookup[atk_idx] = np.where(attack_region > cutoff)[0]
-			print(f'{lookup_name} detected atk {atk_idx} length {len(attack_idxs)} at point {det_point}')
+			relative_det_points = np.where(attack_region > cutoff)[0]			
+			absolute_det_points = [attack_idxs[0] + rp for rp in relative_det_points]  # absolute indices in test dataset
+			detection_lookup[atk_idx] = min(absolute_det_points)  # First absolute detection
+			detection_full_lookup[atk_idx] = absolute_det_points  # All absolute detections
+			print(f'{lookup_name} detected atk {atk_idx} length {len(attack_idxs)} at points {len(absolute_det_points)} detections')
 		else:
 			print(f'{lookup_name} missed atk {atk_idx}')
 	
