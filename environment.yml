@@ -1,4 +1,4 @@
-name: swat-lstm-ensemble
+name: ics-anomaly-attribution
 channels:
   - anaconda
   - conda-forge

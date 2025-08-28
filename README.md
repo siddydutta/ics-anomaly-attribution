@@ -14,17 +14,29 @@
    limitations under the License.
 -->
 
-# Attributions for ML-based ICS Anomaly Detection
+# Attributions for ML-based ICS Anomaly Detection: SWaT Testbed
+> Anomaly eXplanation for Industrial control Systems (AXIS)
+
+![AXIS Framework](/docs/axis-framework.png)
+
 
 > [!NOTE]  
 > This repository is a fork of the original [ics-anomaly-attribution](https://github.com/pwwl/ics-anomaly-attribution) project by Clement Fung, Eric Zeng, and Lujo Bauer.
 >
-> It has been modified for use in a dissertation project, with the following changes:
-> - Updated to work with newer versions of Python and the TensorFlow library.
+> It contains the modifications implemented for **Stage II: Anomaly Detection with XAI Attributions** of the AXIS framework, with the following changes:
+> - Updated to work with newer versions of Python and the TensorFlow library (see: [environment.yml](/environment.yml)).
 > - Reduced scope to focus on the **SWaT** dataset only.
 > - Uses only the **LSTM** model architecture.
-> - Uses the ideal timing strategies only.
+> - Uses ideal timing strategies only.
 > - Uses **MSE**, **SM** and **LEMNA** attributions for the ensemble method for anomaly attribution, implemented in [save_ensemble_attributions.py](/save_ensemble_attributions.py).
+
+
+![Stage II Overview](/docs/stage-ii.png)
+
+> [!NOTE]  
+> End of Modifications
+---
+
 
 This repository contains code for the paper: "Attributions for ML-based ICS anomaly detection: From theory to practice", to appear at the 31st Network and Distributed System Security Symposium (NDSS 2024).
 
